@@ -6,9 +6,6 @@
 const int sensor_bits = 9;
 const int sensor_pin = A5;
 
-const int GSR = 7; // GSRセンサのアナログピン番号を7に設定
-int sensorValue = 0;
-
 OneWire oneWire(sensor_pin);
 DallasTemperature ths(&oneWire);
 
@@ -33,9 +30,10 @@ void show_press() {
 }
 
 void show_gsr() {
-  sensorValue = analogRead(GSR);
-  Serial.print("GSR, ");
-  Serial.print(sensorValue);
+  int g;
+  g = analogRead(ANLG1);
+  Serial.print("ANLG1, ");
+  Serial.print(g);
 }
 
 void loop() {
