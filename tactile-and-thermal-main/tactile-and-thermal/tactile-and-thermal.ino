@@ -32,8 +32,9 @@ void show_press() {
 
 void show_gsr() {
   int gsr_value = analogRead(GSR);
+  int last_three_digits = gsr_value % 1000;  // Extract the last three digits
   Serial.print(", GSR, ");
-  Serial.print(gsr_value);
+  Serial.print(last_three_digits);  // Print only the last three digits
 }
 
 void loop() {
