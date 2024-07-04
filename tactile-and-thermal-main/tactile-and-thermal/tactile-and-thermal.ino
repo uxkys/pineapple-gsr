@@ -18,30 +18,39 @@ void setup() {
 }
 
 void show_temp() {
-  ths.requestTemperatures();
-  Serial.print("THS, ");
-  Serial.print(ths.getTempCByIndex(0));
+  //ths.requestTemperatures();
+  //Serial.print("THS, ");
+  //Serial.print(ths.getTempCByIndex(0));
 }
 
 void show_press() {
-  int p;
-  p = analogRead(ANLG0);
-  Serial.print("ANLG0, ");
-  Serial.print(p);
+  //int p;
+  //p = analogRead(ANLG0);
+  //Serial.print("ANLG0, ");
+  //Serial.print(p);
 }
 
 void show_gsr() {
-  int gsr_value = analogRead(GSR);
-  int last_three_digits = gsr_value % 1000;  // Extract the last three digits
-  Serial.print(", GSR, ");
-  Serial.print(last_three_digits);  // Print only the last three digits
+  int sensorValue = 0;
+  long sum = 0;
+  int gsr_average = 0;
+
+  for(int i = 0; i < 10; i++) {  // Average the 10 measurements to remove the glitch
+    sensorValue = analogRead(GSR) * 100;  // Scale the value by 100
+    sum += sensorValue;
+    delay(5);
+  }
+  gsr_average = sum / 10;
+  // int last_three_digits = gsr_average % 1000;  // Extract the last three digits
+  int scaled_value = gsr_average;
+  Serial.print("GSR, ");
+  Serial.println(scaled_value);  // Print the scaled value
 }
 
 void loop() {
-  show_temp();
-  Serial.print(", ");
-  show_press();
-  Serial.print(", ");
+  //show_temp();
+  //Serial.print(", ");
+  //show_press();
   show_gsr();
   Serial.println("");
   delay(100);  // 次のデータ取得まで100ミリ秒待機
