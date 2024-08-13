@@ -1,11 +1,10 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
-
-#include "pineapple.h"
+#include "pineapple.h"  // この行は不要な場合は削除
 
 const int sensor_bits = 9;
 const int sensor_pin = A5;
-const int GSR = ANLG1;  // GSRセンサのアナログピン番号をANLG1に設定
+const int heartPin = ANLG1;
 
 OneWire oneWire(sensor_pin);
 DallasTemperature ths(&oneWire);
@@ -13,20 +12,12 @@ DallasTemperature ths(&oneWire);
 void setup() {
   pinMode(GATE, OUTPUT);
   digitalWrite(GATE, HIGH);
-  Serial.begin(9600);
+  Serial.begin(115200);
   ths.setResolution(sensor_bits);
 }
 
-void show_gsr() {
-  int sensorValue = 0;
-  long sum = 0;
-  int gsr_average = 0;
-  sensorValue = analogRead(GSR) * 100;
-  Serial.println(sensorValue);
-}
-
 void loop() {
-  show_gsr();
-  Serial.println("");
-  delay(1000);  // 次のデータ取得まで100ミリ秒待機
+  int heartValue = analogRead(heartPin);
+  Serial.println(heartValue);
+  delay(5);  // 5ミリ秒の遅延
 }
